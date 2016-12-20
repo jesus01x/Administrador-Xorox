@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="66058626-494b-42f7-95ee-ecced165d721">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="fecha15" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha15_mod" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha16" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha16_mod" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT b.Carrera,sec_to_time(sum(time_to_sec(a.Duracion))) FROM uso_del_equipo a, alumnos b where a.NO_MATRICULA=b.NO_MATRICULA and str_to_date(Fecha, '%d/%m/%Y') between cast($P{fecha15} as date) and cast($P{fecha16} as date) group by b.Carrera;]]>
+	</queryString>
+	<field name="Carrera" class="java.lang.String"/>
+	<field name="sec_to_time(sum(time_to_sec(a.Duracion)))" class="java.sql.Time"/>
+	<background>
+		<band height="555" splitType="Stretch">
+			<frame>
+				<reportElement uuid="b324deb6-538b-40bb-82bd-c30401fa782e" x="1" y="185" width="801" height="344"/>
+			</frame>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="7de6fd8a-62c9-4751-8303-4600ed2cc24b" x="0" y="188" width="801" height="331"/>
+				<imageExpression><![CDATA["C:\\Users\\LugoUAdeC\\Documents\\Administrador\\src\\Imagenes\\image4154.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="203" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="902d969f-28a9-438a-ad80-2b6ad2046afb" style="Title" x="235" y="0" width="372" height="62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Universidad Autonoma de Coahuila]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="902d969f-28a9-438a-ad80-2b6ad2046afb" style="Title" x="223" y="48" width="369" height="62"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" pdfFontName="Times-Roman"/>
+				</textElement>
+				<text><![CDATA[Escuela de Sistemas Unidad Torreon]]></text>
+			</staticText>
+			<frame>
+				<reportElement uuid="ba532d5c-0703-4e90-b832-cbe61cda5d28" x="1" y="0" width="197" height="136"/>
+				<image scaleImage="FillFrame">
+					<reportElement uuid="de30dcd4-d83f-45aa-94ee-ee32ff177aa5" x="20" y="0" width="149" height="136"/>
+					<imageExpression><![CDATA["src/img/Uac.png"]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement uuid="7d928d79-b823-41db-810c-eca8706fc545" x="625" y="0" width="177" height="136"/>
+			</frame>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="6e4bafa9-6e11-44f1-a60c-7758c7b2a3be" x="625" y="0" width="165" height="136"/>
+				<imageExpression><![CDATA["src/img/comp.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="59104881-79e6-425a-9e1d-3b22aa378e9e" x="223" y="141" width="390" height="23"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte Concentrado del Uso del Equipo por Carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18712975-6d53-44bc-9e5b-ccd5fe8df0b8" x="283" y="116" width="107" height="20"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d5ee0b3-d50b-469a-8adf-4a45db8442c7" x="387" y="113" width="148" height="26"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Centro de computo]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2a304aab-487e-4c4e-a0a8-5af1ac5ccef8" x="468" y="164" width="100" height="25"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha16_mod}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0678cb4f-e7ed-41fb-8caa-ce44db419be5" x="264" y="165" width="62" height="29"/>
+				<textElement textAlignment="Right">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8f493690-a64f-4aff-b6f9-4fcd20d3c4a0" x="329" y="164" width="100" height="25"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha15_mod}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0c57e3df-ae4b-4f7d-8d4a-13cd9914a0b6" x="405" y="165" width="63" height="29"/>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement uuid="1fa9b363-4dc0-43b7-90b9-3720a31fa22e" positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="086cb84b-a347-4960-ae1c-6b18394ef217" style="Column header" x="193" y="0" width="170" height="15" forecolor="#000000"/>
+				<textElement/>
+				<text><![CDATA[Carrera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="706f7d84-44ad-4b7d-a127-2692d6436ab4" style="Column header" x="468" y="0" width="191" height="15" forecolor="#000000"/>
+				<textElement/>
+				<text><![CDATA[Duracion]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement uuid="cc6b5eed-d69f-4e12-a156-d8e51cb327a6" style="Row" mode="Opaque" x="0" y="0" width="802" height="15"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ffad7219-d3d6-4a1d-931b-2d643a012ac7" style="Detail" x="193" y="0" width="110" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{Carrera}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="dcd4ea2e-b222-4230-810e-74f75d685979" style="Detail" x="468" y="0" width="98" height="15"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[new SimpleDateFormat("HH:mm:ss").format($F{sec_to_time(sum(time_to_sec(a.Duracion)))})]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement uuid="7bf9c9b2-51a0-4b6f-a3fe-1b8cdf2a67cb" positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement uuid="73189911-2dfb-415a-8ff1-34968d56f0b7" mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF"/>
+				<textField evaluationTime="Report">
+					<reportElement uuid="301eb461-039f-4a6d-895a-86c531077746" style="Column header" x="783" y="1" width="40" height="20" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="08b04b2d-ccd2-4b5e-91b1-0edf5a3332c3" style="Column header" x="703" y="1" width="80" height="20" forecolor="#000000"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="076804ab-6b94-4cd7-a973-8fd2eaa93cc1" style="Column header" x="22" y="1" width="197" height="20" forecolor="#000000"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
