@@ -34,7 +34,7 @@ boolean editando=false;
 
 //Los paso como parametro de medidas para la imagen de fondo
 fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");    
-    String cabecera[]={"ID Ciclo Escolar","Ciclo Escolar","Desde","Hasta","Estado"};
+    String cabecera[]={"ID Ciclo Escolar","Ciclo Escolar","Año","Desde","Hasta","Estado"};
     Object datos[][];
     
     DefaultTableModel md;
@@ -69,7 +69,7 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         v.SNumeros(txtID_Ciclo_Esc);
 //        v.SLETRAS(txtCicloEscolar); 
  JOptionPane.showMessageDialog(null, "LLEGA A LAS CONSULTAS");
- //Consultar();
+ Consultar();
   JOptionPane.showMessageDialog(null, "TERMINA LAS CONSULTAS");
     }
     
@@ -100,7 +100,7 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
     try {
         Conexion miconexion=new Conexion();
         Connection conn= miconexion.getConnection(); 
-        String consultar="SELECT * FROM xorox.ciclo_escolar;";
+        String consultar="SELECT * FROM xorox.ciclo_escolar order by estado;";
          String Ciclo_esc_desde;
          String Ciclo_esc_hasta;
          String estado="activo";
@@ -466,6 +466,8 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
                 {
                     //Actuliza un registro en especifico de acuerdo al parametro que le paso
                     Actualizar(idCiclo_esc_mod);
+                    //Actualiza los registros de los Ciclos Escolares qpara que este modificado sea el nuevo Ciclo Escolar activo
+                    Actualizar_Todo(idCiclo_Esc);
                     //Parche por si alguna columna y fila estan seleccionadas
                     if(jTable1.getSelectedRow()>=0 ||jTable1.getSelectedColumn()>=0 )
                     {
