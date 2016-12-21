@@ -39,7 +39,9 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
     
     DefaultTableModel md;
     public Reg_Ciclo_Escolar() {
+        JOptionPane.showMessageDialog(null, "¿INICIA?");
         initComponents();
+         JOptionPane.showMessageDialog(null, "SI");
         x=this.getWidth();
         y=this.getHeight();
         jPanel1.setOpaque(false);
@@ -54,10 +56,11 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         //Se empaqueta para que este se quede estatico sin modificar la posiciones de los
         //demas paneles.
         this.pack();
-        
+         JOptionPane.showMessageDialog(null, "CARGA EL FONDO");
       
         md=new DefaultTableModel(datos, cabecera);
         jTable1.setModel(md);
+         JOptionPane.showMessageDialog(null, "CARGA EL MODELO DE LA TABLA");
          Desactivar_Campos();
          Desactivar_Botones();
         //No permite al usuario editar el id
@@ -65,7 +68,30 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
                
         v.SNumeros(txtID_Ciclo_Esc);
 //        v.SLETRAS(txtCicloEscolar); 
- Consultar();
+ JOptionPane.showMessageDialog(null, "LLEGA A LAS CONSULTAS");
+ //Consultar();
+  JOptionPane.showMessageDialog(null, "TERMINA LAS CONSULTAS");
+    }
+    
+    //Actualiza la columna estado con valor de 'activo' a inactivo (de todos los registros) 
+    public void Actualizar_Todo(int idCicloEsc)
+    {
+         try
+      {
+   
+        Conexion miconexion=new Conexion();
+        Connection conn= miconexion.getConnection();
+        //actualiza la columna estado con valor activo a inactivo(de todos los registros)   
+        String actualizar="UPDATE ciclo_escolar SET estado='inactivo' where estado='activo' and id_Ciclo_Escolar!=?;";
+        PreparedStatement pst=conn.prepareStatement(actualizar);
+        pst.setInt(1, idCicloEsc);
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Ciclos Escolares Actualizados");
+        conn.close();
+      }catch(SQLException e)
+      {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+      }  
     }
 
     public void Consultar() 
@@ -81,12 +107,13 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         
         Statement pst2=conn.createStatement();
         ResultSet rs=pst2.executeQuery(consultar);
-        Object info[]=new Object[5];
+        Object info[]=new Object[6];
         while(rs.next())
         {
             info[0]=rs.getInt("id_Ciclo_Escolar");
             info[1]=rs.getString("Ciclo_Escolarcol");
-            info[2]=rs.getString("desde");
+            info[2]=rs.getString("año");
+            info[3]=rs.getString("desde");
             //El siguiente switch cambia el formato del atributo "desde"
             //01/07/año por Agosto-Diciembre año
 //            switch(info[2].toString())//Atributo "desde"
@@ -99,7 +126,7 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
 //                Ciclo_esc_aux_desde="Agosto-Diciembre";
 //                break;
 //                }
-            info[3]=rs.getString("hasta");
+            info[4]=rs.getString("hasta");
          //El siguiente switch cambia el formato al atributo "hasta"
          //01/07/año por Agosto-Diciembre año            
 //            switch(info[3].toString())//Atributo hasta 
@@ -124,12 +151,12 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
           //Formato de Fecha      dia   /    mes       /     año
          // Ciclo_esc_hasta=hastaaux[0]+"-"+hastaaux[1]+"-"+hastaaux[2];   
            //   JOptionPane.showMessageDialog(null, "XLSX");
-            info[4]=rs.getString("estado");            
+            info[5]=rs.getString("estado");            
           //  JOptionPane.showMessageDialog(null, "KDOFLFKF");
             md.addRow(info);
         }
     } catch (SQLException ex) {
-      JOptionPane.showMessageDialog(null, ex);
+      JOptionPane.showMessageDialog(null, ex.getMessage());
     }
     }
     
@@ -407,18 +434,19 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         }
         else
         {
-            String Ciclo_Esc=jcbCiclo_Esc.getSelectedItem().toString();
+            
             int idCiclo_Esc=Integer.parseInt(txtID_Ciclo_Esc.getText());
             //confirma si se encuentra en modo de edicion
             if(editando==false)
             {
 
-                exito=Insertar();//Confirma que se realizo la Inserccion correctamente
+                exito=Insertar(idCiclo_Esc);//Confirma que se realizo la Inserccion correctamente
                 limpiartabla(md);
                 Consultar();
                 
                 if(exito)
                 {
+                    Actualizar_Todo(idCiclo_Esc);
                     //Desactiva los campos y botones                
                     Desactivar_Botones();                  
                     Desactivar_Campos();                  
@@ -673,17 +701,17 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         jcbCiclo_Esc.setSelectedItem("Seleccione");
     }
       
-    public boolean Insertar()
+    public boolean Insertar(int id_Ciclo_Esc)
     {
         boolean exito=false;     
          try
             {
          String registrar="INSERT INTO `xorox`.`ciclo_escolar` "
-         + "(`id_Ciclo_Escolar`,`Ciclo_Escolarcol`, `desde`, `hasta`, `estado`) "
-         + "VALUES (?,?,?,?,?);";
-         int idCiclo_Esc=Integer.parseInt(txtID_Ciclo_Esc.getText());
+         + "(`id_Ciclo_Escolar`, `Ciclo_Escolarcol`, `año`, `desde`, `hasta`, `estado`) "
+         + "VALUES (?,?,?,?,?,?);";
+         //int idCiclo_Esc=Integer.parseInt(txtID_Ciclo_Esc.getText());
          String Ciclo_esc=jcbCiclo_Esc.getSelectedItem().toString();
-         String año=jcbAño.getSelectedItem().toString();
+         int año=Integer.parseInt(jcbAño.getSelectedItem().toString());
          String Ciclo_esc_aux_desde="";
          String Ciclo_esc_aux_hasta="";
          String estado="activo";
@@ -703,17 +731,18 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
          Conexion miconexion=new Conexion();
          Connection conn= miconexion.getConnection();
          PreparedStatement pst=conn.prepareStatement(registrar);
-         Object info[]={idCiclo_Esc,Ciclo_esc,Ciclo_esc_aux_desde,Ciclo_esc_aux_hasta,estado};
-         pst.setInt(1, idCiclo_Esc);       
+         Object info[]={id_Ciclo_Esc,Ciclo_esc,Ciclo_esc_aux_desde,Ciclo_esc_aux_hasta,estado};     
          //Se concatena el año a la cadena del ciclo
+         pst.setInt(1, id_Ciclo_Esc);
          pst.setString(2, Ciclo_esc);
          //Formato de Fecha dia/mes/año desde que fecha empieza el Ciclo Escolar
          //Se concatena un slash para completar el formato de fecha
-         pst.setString(3, Ciclo_esc_aux_desde);
+         pst.setInt(3, año);
+         pst.setString(4, Ciclo_esc_aux_desde);
          //Formato de Fecha dia/mes/año hasta que fecha termina el Ciclo Escolar
          //Se concatena un slash para completar el formato de fecha
-         pst.setString(4, Ciclo_esc_aux_hasta);
-         pst.setString(5, estado);
+         pst.setString(5, Ciclo_esc_aux_hasta);
+         pst.setString(6, estado);
          pst.executeUpdate();
          md.addRow(info);
          limpiar();
