@@ -38,10 +38,8 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
     Object datos[][];
     
     DefaultTableModel md;
-    public Reg_Ciclo_Escolar() {
-        JOptionPane.showMessageDialog(null, "¿INICIA?");
+    public Reg_Ciclo_Escolar() {      
         initComponents();
-         JOptionPane.showMessageDialog(null, "SI");
         x=this.getWidth();
         y=this.getHeight();
         jPanel1.setOpaque(false);
@@ -55,22 +53,15 @@ fondo_imagen  p=new fondo_imagen(x,y,"/Imagenes/fondo10.png");
         this.add(p);
         //Se empaqueta para que este se quede estatico sin modificar la posiciones de los
         //demas paneles.
-        this.pack();
-         JOptionPane.showMessageDialog(null, "CARGA EL FONDO");
-      
+        this.pack();      
         md=new DefaultTableModel(datos, cabecera);
         jTable1.setModel(md);
-         JOptionPane.showMessageDialog(null, "CARGA EL MODELO DE LA TABLA");
          Desactivar_Campos();
          Desactivar_Botones();
         //No permite al usuario editar el id
-        //Para que este lo asigne automaticamente
-               
+        //Para que este lo asigne automaticamente              
         v.SNumeros(txtID_Ciclo_Esc);
-//        v.SLETRAS(txtCicloEscolar); 
- JOptionPane.showMessageDialog(null, "LLEGA A LAS CONSULTAS");
  Consultar();
-  JOptionPane.showMessageDialog(null, "TERMINA LAS CONSULTAS");
     }
     
     //Actualiza la columna estado con valor de 'activo' a inactivo (de todos los registros) 
